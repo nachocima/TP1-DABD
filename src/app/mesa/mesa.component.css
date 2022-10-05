@@ -1,0 +1,15 @@
+.entorno{
+    min-height: 100vh;
+    background: linear-gradient(360deg, #000, #222, #000);
+}
+.mesa{
+    min-height: 400px;
+    height: max-content;
+    border-radius: 5%;
+    background: linear-gradient(360deg, #112706, #224B0C, #112706);
+
+}
+.carta{
+    width: 90px;
+    height: 120px;
+}

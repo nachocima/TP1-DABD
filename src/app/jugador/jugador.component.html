@@ -1,0 +1,11 @@
+<section>
+    <div class="container-fluid">
+        <div class="container mx-auto py-3 row">
+            <div class="col-12 d-flex justify-content-between">
+                <button *ngIf="jugar" class="btn btn-primary" (click)="pedir()">Pedir</button>
+                <button *ngIf="!jugar" class="btn btn-primary mx-auto" (click)="nuevaPartida()">Nuevo Juego</button>
+                <button *ngIf="jugar" class="btn btn-primary" (click)="plantarse()">Plantarse</button>
+            </div>
+        </div>
+    </div>
+</section>
