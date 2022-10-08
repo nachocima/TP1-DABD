@@ -29,9 +29,8 @@ export class MesaComponent implements OnInit {
 
   pedirCarta(){
     var carta = 0
-    carta = Math.floor(Math.random() * 52)
+    carta = Math.floor(Math.random() * this.mazo.length)
     this.valor += this.mazo[carta].valor;
-    //this.carta =  this.mazo[carta].carta + this.mazo[carta].palo
     this.mazo2.push(this.mazo[carta])
     if(this.mazo[carta].carta == "As" && this.valor > 21){
       this.valor -= 10
@@ -62,7 +61,7 @@ export class MesaComponent implements OnInit {
   croupier(){
     while (this.valorCroupier <= 16 ) {
       var carta = 0
-      carta = Math.floor(Math.random() * 52)
+      carta = Math.floor(Math.random() * this.mazo.length)
       this.valorCroupier += this.mazo[carta].valor;
       this.mazo3.push(this.mazo[carta])
     }
