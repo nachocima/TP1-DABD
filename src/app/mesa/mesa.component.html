@@ -14,6 +14,6 @@
             </div>
             <p *ngIf="mostrar" class="text-white text-center w-100">Puntos del jugador: {{valor}}</p>
         </div>
-        <app-jugador [jugar]="jugar" (onNuevoJuego)="resetear()" (onPedir)="pedirCarta($event); mostrarCarta(true)" (onPlantarse)="croupierMostrar()"></app-jugador>
+        <app-jugador [jugar]="jugar" (onNuevoJuego)="resetear()" (onPedir)="onPedir($event)" (onPlantarse)="croupierMostrar()"></app-jugador>
     </div>
 </section>

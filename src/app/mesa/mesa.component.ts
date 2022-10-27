@@ -33,12 +33,15 @@ export class MesaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //el parametro para getMazo es una funcionalidad para elegir la cantidad de mazos para la partida, por ahora se encuentra hardcodeado pero en la proxima entrega se implementara la funcionalidad correctamente
-    
     this.service.getMazo(3).subscribe({
       next: (r: Carta[]) => this.mazo = r,
       error: (e)=> alert(e.error)
     })
+  }
+
+  onPedir(carta: Carta){
+    this.pedirCarta(carta);
+    this.mostrarCarta(true);
   }
 
   pedirCarta(carta: Carta){
@@ -137,7 +140,12 @@ export class MesaComponent implements OnInit, OnDestroy {
       this.jugar = false;
       return
     }
-    this.mostrarAlert("Ha ganado con: " + this.valor + ", El Croupier se ha pasado con: " + v)
+    if(v > 21){
+      this.mostrarAlert("Ha ganado con: " + this.valor + ", El Croupier se ha pasado con: " + v)
+      this.jugar = false;
+      return
+    }
+    this.mostrarAlert("Ha ganado con: " + this.valor + ", Croupier: " + v)
     this.jugar = false;
     
   }
