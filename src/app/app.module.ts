@@ -7,23 +7,29 @@ import { MesaComponent } from './mesa/mesa.component';
 import { JugadorComponent } from './jugador/jugador.component';
 import { CroupierComponent } from './croupier/croupier.component';
 import { MazoService } from './services/mazo.service';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { MainComponent } from './main/main.component'
+import { LoginService } from './services/login.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     MesaComponent,
     JugadorComponent,
-    CroupierComponent
+    CroupierComponent,
+    LoginComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [MazoService],
+  providers: [MazoService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

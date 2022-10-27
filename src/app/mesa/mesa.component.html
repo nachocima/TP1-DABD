@@ -1,19 +1,19 @@
 <section>
     <div class="container-fluid py-5 entorno">
-        <app-croupier></app-croupier>
+        <app-croupier [flag]="croupierFlag" (onMazo)="croupier($event)"></app-croupier>
         <div class="container p-5 mx-auto mesa">
             <div class="row py-4">
                 <div class="col-2" *ngFor="let c of mazo3">
-                    <img *ngIf="mostrar" src="\assets\cartas\{{c.carta+c.palo}}.PNG" alt="{{c.carta+c.palo}}" class="text-white carta">
+                    <img *ngIf="mostrar" src="\assets\cartas\{{c.numero+c.palo}}.PNG" alt="{{c.numero+c.palo}}" class="text-white carta">
                 </div>
             </div>
             <div class="row  py-4">
                 <div class="col-2" *ngFor="let c of mazo2">
-                    <img *ngIf="mostrar" src="\assets\cartas\{{c.carta+c.palo}}.PNG" alt="{{c.carta+c.palo}}" class="text-white carta">
+                    <img *ngIf="mostrar" src="\assets\cartas\{{c?.numero+c.palo}}.PNG" alt="{{c.numero+c.palo}}" class="text-white carta">
                 </div>
             </div>
             <p *ngIf="mostrar" class="text-white text-center w-100">Puntos del jugador: {{valor}}</p>
         </div>
-        <app-jugador [jugar]="jugar" (onNuevoJuego)="resetear()" (onPedir)="mostrarCarta(true); pedirCarta()" (onPlantarse)="croupier()"></app-jugador>
+        <app-jugador [jugar]="jugar" (onNuevoJuego)="resetear()" (onPedir)="pedirCarta($event); mostrarCarta(true)" (onPlantarse)="croupierMostrar()"></app-jugador>
     </div>
 </section>

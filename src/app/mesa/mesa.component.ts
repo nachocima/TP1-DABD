@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 import { Carta } from '../models/Carta';
 import { MazoService } from '../services/mazo.service';
 
@@ -7,7 +10,7 @@ import { MazoService } from '../services/mazo.service';
   templateUrl: './mesa.component.html',
   styleUrls: ['./mesa.component.css']
 })
-export class MesaComponent implements OnInit {
+export class MesaComponent implements OnInit, OnDestroy {
 
   mazo: Carta[] = [];
   mazo2: Carta[] = [];
@@ -17,32 +20,53 @@ export class MesaComponent implements OnInit {
   mensaje = "";
   valor: number = 0;
   valorCroupier: number = 0;
-  carta: string = ""
+  carta: Carta;
+  cartaC: Carta;
+  subscription = new Subscription();
+  croupierFlag = false;
 
-  constructor(private service: MazoService) { 
-
+  constructor(private service: MazoService, private router: Router) { 
+    
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.mazo = this.service.getMazo()
+    //el parametro para getMazo es una funcionalidad para elegir la cantidad de mazos para la partida, por ahora se encuentra hardcodeado pero en la proxima entrega se implementara la funcionalidad correctamente
+    
+    this.service.getMazo(3).subscribe({
+      next: (r: Carta[]) => this.mazo = r,
+      error: (e)=> alert(e.error)
+    })
   }
 
-  pedirCarta(){
-    var carta = 0
-    carta = Math.floor(Math.random() * this.mazo.length)
-    this.valor += this.mazo[carta].valor;
-    this.mazo2.push(this.mazo[carta])
-    if(this.mazo[carta].carta == "As" && this.valor > 21){
+  pedirCarta(carta: Carta){
+    this.valor += carta.valor;
+    this.mazo2.push(carta)
+    if(carta.numero == "As" && this.valor > 21){
       this.valor -= 10
     }
     if(this.valor > 21){
-      alert("Se ha pasado con " + this.valor)
+      
+      this.mostrarAlert("Se ha pasado con " + this.valor)
       this.jugar = false;
     }
     if(this.valor == 21){
-      alert("Ha ganado con " + this.valor)
+      this.mostrarAlert("Ha ganado con " + this.valor)
       this.jugar = false;
     }
+  }
+
+  mostrarAlert(texto: string){
+    Swal.fire({
+      title: "Resultado",
+      text: texto,
+      background: '#111',
+      color: 'rgb(77, 75, 16)',
+      confirmButtonText: 'Ok',
+      confirmButtonColor: '#333',
+    })
   }
   
   resetear(){
@@ -52,30 +76,68 @@ export class MesaComponent implements OnInit {
       this.mazo3 = []
       this.mostrarCarta(false)
       this.jugar = true;
+      this.croupierFlag = false
+
+      this.subscription.add(
+        this.service.getCartasUsadas().subscribe({
+          next:(r: number) => this.validarCantidadCartas(r),
+          error: (e) => alert(e.error)
+      }))
+  }
+
+  validarCantidadCartas(n: number){
+    var texto = ""
+    if(n == 1){
+      texto = "No quedan cartas disponibles, si desea continuar jugando debe iniciar otra partida"
+      this.router.navigateByUrl("/main")
+    }
+    else if(n == 2){
+      texto = "Quedan pocas cartas en el mazo, esta podría ser la última jugada de la partida..."
+    }
+    if(n != 3){
+      Swal.fire({
+        title: "Atención!",
+        text: texto,
+        background: '#111',
+        color: 'rgb(77, 75, 16)',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#333',
+        showCancelButton: true,
+      })
+    }
   }
 
   mostrarCarta(b: boolean){
     this.mostrar = b;
   }
 
-  croupier(){
-    while (this.valorCroupier <= 16 ) {
-      var carta = 0
-      carta = Math.floor(Math.random() * this.mazo.length)
-      this.valorCroupier += this.mazo[carta].valor;
-      this.mazo3.push(this.mazo[carta])
+  croupierMostrar(){
+    this.croupierFlag = true
+  }
+
+  croupier(mazo: Carta[]){
+
+    var v = 0
+
+    for (let index = 0; index < mazo.length; index++) {
+      v += mazo[index].valor;
+      if(mazo[index].numero == "As" && v > 21){
+          v -= 10
+      }
+      this.mazo3.push(mazo[index])
     }
-    if(this.valorCroupier > this.valor && this.valorCroupier <= 21){
-      alert("Croupier gana con: " + this.valorCroupier + " - Jugador: " + this.valor)    
+
+    if(v > this.valor && v <= 21){
+      this.mostrarAlert("Croupier gana con: " + v + ", Jugador: " + this.valor)    
       this.jugar = false;
       return
     }
-    if(this.valor == this.valorCroupier){
-      alert("Empate")
+    if(this.valor == v){
+      this.mostrarAlert("Empate")
       this.jugar = false;
       return
     }
-    alert("Jugador gana con: " + this.valor + " - Croupier: " + this.valorCroupier)
+    this.mostrarAlert("Ha ganado con: " + this.valor + ", El Croupier se ha pasado con: " + v)
     this.jugar = false;
     
   }

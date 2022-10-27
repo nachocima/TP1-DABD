@@ -1,5 +1,11 @@
 export class Carta{
+    id: number
+    numero: string
     palo: string
-    carta: string
     valor: number
+
+
+    constructor() {
+
+    }
 }

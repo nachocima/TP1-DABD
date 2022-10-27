@@ -1,0 +1,14 @@
+header{
+    background-image: url(..\..\assets\fondos\fondo_poker.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+h1{
+    color: rgb(77, 75, 16);
+}
+button{
+    width: 250px;
+    background-color: rgb(77, 75, 16);
+    color: black;
+}

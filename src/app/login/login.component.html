@@ -1,0 +1,31 @@
+<header>
+    <div class="container-fluid py-5">
+        <div class="container py-5 mx-auto">
+            <h1 class="display-1 text-center">21 Black Jack</h1>
+        </div>
+        <div class="container py-5 mx-auto">
+            <form [formGroup]="form" class="w-75 p-5 mx-auto">
+                <div class="col-12 my-1 w-75 mx-auto">
+                    <h3 class="display-6 text-white text-center">Iniciar Sesión</h3>
+                </div>
+
+                <div class="col-12 my-3 w-75 mx-auto">
+                    <label for="" class="form-label text-white">Usuario</label>
+                    <input type="text" id="usuario" class="form-control" formControlName="usuario">
+                  </div>
+
+                  <div class="col-12 my-3 w-75 mx-auto">
+                    <label for="" class="form-label text-white">Contraseña</label>
+                    <input type="password" id="pass" class="form-control" formControlName="pass">
+                  </div>
+
+                  <div class="col-12 mt-4 w-75 mx-auto d-flex justify-content-between">
+                    <button class="btn" (click)="login()">Aceptar</button>
+                    <button class="btn" (click)="postUser()">Registrarme</button>
+                  </div>
+            </form>
+        </div>
+    </div>
+</header>
+
+
