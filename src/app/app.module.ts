@@ -12,6 +12,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component'
 import { LoginService } from './services/login.service';
+import { ReportesComponent } from './reportes/reportes.component';
+import { ReportesService } from './services/reportes.service';
+import { NgChartsModule } from 'ng2-charts';
+import { Reporte1Component } from './reportes/reporte1/reporte1.component';
+import { Reporte2Component } from './reportes/reporte2/reporte2.component';
+import { Reporte3Component } from './reportes/reporte3/reporte3.component';
+import { CartasComponent } from './cartas/cartas.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +27,22 @@ import { LoginService } from './services/login.service';
     JugadorComponent,
     CroupierComponent,
     LoginComponent,
-    MainComponent
+    MainComponent,
+    ReportesComponent,
+    Reporte1Component,
+    Reporte2Component,
+    Reporte3Component,
+    CartasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule
   ],
-  providers: [MazoService, LoginService],
+  providers: [MazoService, LoginService, ReportesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

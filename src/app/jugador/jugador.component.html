@@ -3,7 +3,7 @@
         <div class="container mx-auto py-3 row">
             <div class="col-12 d-flex justify-content-around">
                 <button *ngIf="jugar" class="btn " (click)="pedir()">Pedir</button>
-                <button *ngIf="!jugar" class="btn mx-auto" (click)="nuevaPartida()">Iniciar Mano</button>
+                <button *ngIf="!jugar" class="btn mx-auto" (click)="nuevaJugada()">Iniciar Mano</button>
                 <button *ngIf="!jugar" class="btn mx-auto" (click)="terminarPartida()">Terminar partida</button>
                 <button *ngIf="jugar" class="btn " (click)="plantarse()">Plantarse</button>
             </div>

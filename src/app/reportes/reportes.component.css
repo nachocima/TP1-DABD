@@ -1,0 +1,11 @@
+.activo{
+    background-color: green;
+    border: none;
+}
+button{
+    width: 70%;
+}
+.volver{
+    font-size: 1.1em;
+    color: #777;
+}

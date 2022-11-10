@@ -1,4 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-.b{
-    border: 1px solid red;
+h1, h3{
+    color: rgb(77, 75, 16);
 }

@@ -1,0 +1,10 @@
+<div class="row py-4">
+    <div class="col-2" *ngFor="let c of mazo3">
+        <img *ngIf="mostrar" src="\assets\cartas\{{c.numero+c.palo}}.PNG" alt="{{c.numero+c.palo}}" class="text-white carta">
+    </div>
+</div>
+<div class="row  py-4">
+    <div class="col-2" *ngFor="let c of mazo2">
+        <img *ngIf="mostrar" src="\assets\cartas\{{c?.numero+c.palo}}.PNG" alt="{{c.numero+c.palo}}" class="text-white carta">
+    </div>
+</div>

@@ -46,7 +46,15 @@ export class LoginService {
     localStorage.setItem("id_partida", id.toString());
   }
 
+  gurdarMazos(cant: number){
+    localStorage.setItem("mazos", cant.toString());
+  }
+
   gurdarJugada(id: number){
     localStorage.setItem("id_jugada", id.toString());
+  }
+
+  getJugada(){
+    return localStorage.getItem("id_jugada");
   }
 }

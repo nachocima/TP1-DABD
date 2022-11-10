@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Carta } from '../models/Carta';
+import { JugadaRespuesta } from '../models/JugadaRespuesta';
 import { MazoService } from '../services/mazo.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { MazoService } from '../services/mazo.service';
 })
 export class MesaComponent implements OnInit, OnDestroy {
 
+  mazos: any
   mazo: Carta[] = [];
   mazo2: Carta[] = [];
   mazo3: Carta[] = [];
@@ -33,10 +35,22 @@ export class MesaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.service.getMazo(3).subscribe({
-      next: (r: Carta[]) => this.mazo = r,
-      error: (e)=> alert(e.error)
-    })
+    this.mazos = prompt("Ingrese la cantidad de mazos (3, 4 o 5)", "");
+    if(this.mazos != "3" && this.mazos != "4" && this.mazos != "5"){
+      this.ngOnInit()
+    }
+    else{
+      this.getMazos(this.mazos)
+    }
+  }
+
+  getMazos(cant: number){
+    this.subscription.add(
+      this.service.getMazo(cant).subscribe({
+        next: (r: Carta[]) => this.mazo = r,
+        error: (e)=> alert(e.error)
+      })
+    )
   }
 
   onPedir(carta: Carta){
@@ -50,13 +64,9 @@ export class MesaComponent implements OnInit, OnDestroy {
     if(carta.numero == "As" && this.valor > 21){
       this.valor -= 10
     }
-    if(this.valor > 21){
+    if(this.valor >= 21){
       
-      this.mostrarAlert("Se ha pasado con " + this.valor)
-      this.jugar = false;
-    }
-    if(this.valor == 21){
-      this.mostrarAlert("Ha ganado con " + this.valor)
+      this.validarJugada(0)
       this.jugar = false;
     }
   }
@@ -119,37 +129,25 @@ export class MesaComponent implements OnInit, OnDestroy {
   }
 
   croupier(mazo: Carta[]){
-
     var v = 0
 
     for (let index = 0; index < mazo.length; index++) {
       v += mazo[index].valor;
-      if(mazo[index].numero == "As" && v > 21){
-          v -= 10
-      }
       this.mazo3.push(mazo[index])
     }
 
-    if(v > this.valor && v <= 21){
-      this.mostrarAlert("Croupier gana con: " + v + ", Jugador: " + this.valor)    
-      this.jugar = false;
-      return
-    }
-    if(this.valor == v){
-      this.mostrarAlert("Empate")
-      this.jugar = false;
-      return
-    }
-    if(v > 21){
-      this.mostrarAlert("Ha ganado con: " + this.valor + ", El Croupier se ha pasado con: " + v)
-      this.jugar = false;
-      return
-    }
-    this.mostrarAlert("Ha ganado con: " + this.valor + ", Croupier: " + v)
-    this.jugar = false;
-    
+    this.validarJugada(v)
+    this.jugar = false;  
   }
 
-
+  validarJugada(pc: number){
+    this.subscription.add(
+      this.service.validarJugada(pc, this.valor).subscribe({
+        next:(r: JugadaRespuesta) => this.mostrarAlert(r.ganador),
+        error: (e)=> console.error(e.error)
+        
+      })
+    );
+  }
 
 }

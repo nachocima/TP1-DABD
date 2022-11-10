@@ -18,3 +18,9 @@ form{
     background-color: rgba(27, 26, 25, 0.7);
     backdrop-filter: blur(1px);
 }
+.valid{
+    border: 2px solid green;
+}
+.invalid{
+    border: 2px solid red;
+}

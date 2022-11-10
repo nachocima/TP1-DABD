@@ -16,7 +16,7 @@ import { MazoService } from '../services/mazo.service';
 export class JugadorComponent implements OnInit, OnDestroy {
 
   subscription = new Subscription();
-  partida: number = 0;
+  jugada: number = 0;
   carta: Carta;
   @Output() onPedir = new EventEmitter<Carta>();
   @Output() onPlantarse = new EventEmitter();
@@ -46,7 +46,7 @@ export class JugadorComponent implements OnInit, OnDestroy {
     this.onPlantarse.emit();
   }
 
-  nuevaPartida(){
+  nuevaJugada(){
     this.jugar = true;
     this.subscription.add(
       this.service.nuevaJugada().subscribe({
@@ -75,8 +75,8 @@ export class JugadorComponent implements OnInit, OnDestroy {
   }
 
   guardarJugada(id: number){
-    this.partida = id;
-    this.loginService.gurdarJugada(this.partida);
+    this.jugada = id;
+    this.loginService.gurdarJugada(this.jugada);
   }
 
 }

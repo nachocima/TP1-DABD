@@ -58,6 +58,10 @@ export class MainComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl("/mesa")
   }
 
+  verReportes(){
+    this.router.navigateByUrl("/reportes")
+  }
+
 
 
 }

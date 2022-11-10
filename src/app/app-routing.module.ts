@@ -4,11 +4,13 @@ import { LoginGuard } from './guards/login.guard';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { MesaComponent } from './mesa/mesa.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "main", component: MainComponent, canActivate: [LoginGuard]},
   {path: "mesa", component: MesaComponent, canActivate: [LoginGuard]},
+  {path: "reportes", component: ReportesComponent, canActivate: [LoginGuard]},
   {path: "**", redirectTo: "/login", pathMatch: "full"}
 ];
 

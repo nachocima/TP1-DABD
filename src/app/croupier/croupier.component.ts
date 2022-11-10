@@ -40,6 +40,9 @@ export class CroupierComponent implements OnInit {
 
   cargarMazo(carta: Carta){
     this.v += carta.valor
+    if(carta.numero == "As" && this.v > 21){
+      this.v -= 10
+  }
     this.mazo.push(carta)
     if(this.v <= 16){
       this.jugar()

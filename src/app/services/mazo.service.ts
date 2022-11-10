@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Carta } from '../models/Carta';
+import { JugadaRespuesta } from '../models/JugadaRespuesta';
 import { Respuesta } from '../models/Respuesta';
 
 
@@ -30,9 +31,10 @@ export class MazoService {
   }
 
   pedirCarta(jugador: boolean): Observable<Carta>{
+    var mazos = 3
     var partidaId = localStorage.getItem("id_partida");
     var jugadaId = localStorage.getItem("id_jugada");
-    var url = environment.url + "get/carta?partida=" + partidaId + "&jugada=" + jugadaId + "&jugador=" + jugador
+    var url = environment.url + "get/carta?partida=" + partidaId + "&jugada=" + jugadaId + "&jugador=" + jugador + "&mazos=" + mazos
 
     return this.http.get<Carta>(url);
   }
@@ -54,6 +56,17 @@ export class MazoService {
     var partidaId = localStorage.getItem("id_partida");
     var url = environment.url + "post/jugada?id_partida=" + partidaId
     return this.http.post<any>(url, null);
+  }
+
+  validarJugada(pc: number, pj: number):Observable<JugadaRespuesta>{
+    var jugadaId = localStorage.getItem("id_jugada");
+    var url = environment.url + "put/jugada"
+    var request = {
+      id: jugadaId,
+      puntosJugador: pj,
+      puntosCroupier: pc
+    }
+    return this.http.put<JugadaRespuesta>(url, request);
   }
 
 
